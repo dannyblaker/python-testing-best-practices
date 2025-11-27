@@ -223,11 +223,11 @@ class TestMathLibIntegration:
         """Test that errors propagate correctly across modules."""
         # Test divide by zero in calculator
         with pytest.raises(ValueError):
-            result = calc.divide(10, 0)
+            calc.divide(10, 0)
 
         # Test negative radius in geometry
         with pytest.raises(ValueError):
-            area = geom.circle_area(-5)
+            geom.circle_area(-5)
 
         # Test that valid calculations still work after errors
         valid_result = calc.add(5, 3)
