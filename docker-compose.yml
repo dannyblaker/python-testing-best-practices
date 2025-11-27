@@ -1,0 +1,66 @@
+# Docker Compose configuration for MathLib testing
+
+services:
+  # Run all tests with coverage
+  test:
+    build:
+      context: .
+      target: test
+    container_name: mathlib-test
+    volumes:
+      - ./htmlcov:/app/htmlcov
+      - ./coverage.xml:/app/coverage.xml
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Run demo application
+  demo:
+    build:
+      context: .
+      target: demo
+    container_name: mathlib-demo
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Run unit tests only
+  test-unit:
+    build:
+      context: .
+      target: test-unit
+    container_name: mathlib-test-unit
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Run integration tests only
+  test-integration:
+    build:
+      context: .
+      target: test-integration
+    container_name: mathlib-test-integration
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Generate coverage report
+  coverage:
+    build:
+      context: .
+      target: coverage
+    container_name: mathlib-coverage
+    volumes:
+      - ./htmlcov:/app/htmlcov
+      - ./coverage.xml:/app/coverage.xml
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Development environment with interactive shell
+  dev:
+    build:
+      context: .
+      target: dev
+    container_name: mathlib-dev
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+    environment:
+      - PYTHONUNBUFFERED=1
